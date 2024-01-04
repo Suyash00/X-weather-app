@@ -1,5 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const SearchBar = ({ onSearch }) => {
   const [city, setCity] = useState("");
@@ -39,14 +40,14 @@ const WeatherDisplay = ({ city }) => {
 
   const getWeatherData = async () => {
     try {
-      const data = await fetch(
+      const res = await axios.get(
         `https://api.weatherapi.com/v1/current.json?key=315c9b1f8cb943f1a1c50245240401&q=${city}`
       );
 
-      const res = await data.json();
-      setWeatherData(res);
-    } catch (err) {
-      console.error("Error fetching data: ", err);
+      // const res = await data.json();
+      setWeatherData(res.data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
       alert("Failed to fetch weather data");
     } finally {
       setLoading(false);
@@ -75,7 +76,7 @@ const WeatherDisplay = ({ city }) => {
           />
           <WeatherCard
             title="Condition"
-            data={`${weatherData.current.condition.text}°C`}
+            data={`${weatherData.current.condition.text}`}
           />
           <WeatherCard
             title="Wind Speed"
