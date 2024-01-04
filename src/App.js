@@ -46,8 +46,8 @@ const WeatherDisplay = ({ city }) => {
       const res = await data.json();
       setWeatherData(res);
     } catch (err) {
-      console.error("Error fetching data", err);
-      alert("failed to fetch weather data");
+      console.error("Error fetching data: ", err);
+      alert("Failed to fetch weather data");
     } finally {
       setLoading(false);
     }
